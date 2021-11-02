@@ -20,6 +20,9 @@ public class SortUtils {
         int[] arr3 = new int[]{50,59,71,48,8};
         quickSort(arr3, 0, arr3.length-1);
         System.out.println(Arrays.stream(arr3).mapToObj(Objects::toString).collect(Collectors.joining(" ")));
+        int[] arr4 = new int[]{8,59,71,48,8};
+        bubbleSort(arr4);
+        System.out.println(Arrays.stream(arr4).mapToObj(Objects::toString).collect(Collectors.joining(" ")));
     }
 
     public static int[] theBestMergeSort(int[] arr) {
@@ -172,5 +175,32 @@ public class SortUtils {
 
         quickSort(arr, start, curEnd);
         quickSort(arr, curStart, end);
+    }
+
+    public static void selectionSort(int[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] > arr[j]) {
+                    int t = arr[j];
+                    arr[j] = arr[i];
+                    arr[i] = t;
+                }
+            }
+        }
+    }
+
+    public static void bubbleSort(int[] arr) {
+        for (int i = 0; i < arr.length - 1; i++) {
+            boolean wasSwap = false;
+            for (int j = 0; j < arr.length - i - 1; j++) {
+                if (arr[j] > arr[j+1]) {
+                    int t = arr[j+1];
+                    arr[j+1] = arr[j];
+                    arr[j] = t;
+                    wasSwap = true;
+                }
+            }
+            if (!wasSwap) break;
+        }
     }
 }
