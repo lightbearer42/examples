@@ -40,3 +40,24 @@ public abstract class Digest {
 
     abstract protected byte[] calcDigest(byte[] input);
 }
+
+//Изначальный вариант
+public abstract class Digest {
+    private final Map<byte[], byte[]> cache = new HashMap<>();
+
+    public byte[] digest(byte[] input) {
+        byte[] result = cache.get(input);
+        if (result == null) {
+            synchronized (cache) {
+                result = cache.get(input);
+                if (result == null) {
+                    result = calcDigest(input);
+                    cache.put(input, result);
+                }
+            }
+        }
+        return result;
+    }
+
+    abstract protected byte[] calcDigest(byte[] input);
+}
