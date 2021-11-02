@@ -17,6 +17,9 @@ public class SortUtils {
         System.out.println(Arrays.stream(niceMergeSort(arr1)).mapToObj(Objects::toString).collect(Collectors.joining(" ")));
         int[] arr2 = new int[]{4,2,34,9,2,3,1,6,8,1};
         System.out.println(Arrays.stream(theBestMergeSort(arr2)).mapToObj(Objects::toString).collect(Collectors.joining(" ")));
+        int[] arr3 = new int[]{50,59,71,48,8};
+        quickSort(arr3, 0, arr3.length-1);
+        System.out.println(Arrays.stream(arr3).mapToObj(Objects::toString).collect(Collectors.joining(" ")));
     }
 
     public static int[] theBestMergeSort(int[] arr) {
@@ -142,4 +145,32 @@ public class SortUtils {
         return result;
     }
 
+    public static void quickSort(int[] arr, int start, int end) {
+        if (start >= end) return;
+
+        int middle = (start + end) / 2;
+
+        int base = arr[middle];
+
+        int curEnd = end;
+        int curStart = start;
+        while(curStart <= curEnd) {
+            while (arr[curStart] < base) curStart++;
+            while (arr[curEnd] > base) curEnd--;
+
+            if (curStart > curEnd) {
+                break;
+            }
+
+            int t = arr[curEnd];
+            arr[curEnd] = arr[curStart];
+            arr[curStart] = t;
+
+            curEnd--;
+            curStart++;
+        }
+
+        quickSort(arr, start, curEnd);
+        quickSort(arr, curStart, end);
+    }
 }
