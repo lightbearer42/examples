@@ -41,7 +41,9 @@ public abstract class Digest {
     abstract protected byte[] calcDigest(byte[] input);
 }
 
-//Изначальный вариант
+/*
+Найти проблемы, написать замечания и предложить исправления к коду
+ */
 public abstract class Digest {
     private final Map<byte[], byte[]> cache = new HashMap<>();
 
