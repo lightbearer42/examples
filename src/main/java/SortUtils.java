@@ -23,6 +23,9 @@ public class SortUtils {
         int[] arr4 = new int[]{8,59,71,48,8};
         bubbleSort(arr4);
         System.out.println(Arrays.stream(arr4).mapToObj(Objects::toString).collect(Collectors.joining(" ")));
+        int[] arr5 = new int[]{8,59,71,48,7};
+        insertSort(arr5);
+        System.out.println(Arrays.stream(arr5).mapToObj(Objects::toString).collect(Collectors.joining(" ")));
     }
 
     public static int[] theBestMergeSort(int[] arr) {
@@ -201,6 +204,18 @@ public class SortUtils {
                 }
             }
             if (!wasSwap) break;
+        }
+    }
+
+    public static void insertSort(int[] arr) {
+        for (int i = 2; i < arr.length; i++) {
+            int key = arr[i];
+            int j = i - 1;
+            while (j >= 0 && arr[j] > key) {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+            arr[j+1] = key;
         }
     }
 }

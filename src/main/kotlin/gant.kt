@@ -1,4 +1,3 @@
-import com.sun.tools.javac.Main
 import java.util.regex.Pattern
 
 class SubTask(val periods: MutableList<Period>, val order: Int, val name: String)
@@ -20,7 +19,8 @@ fun main() {
 fun toJson(input: String): List<MainTask> {
     var strings = input.split("\n");
     var mainTasks = mutableListOf<MainTask>()
-    var currentMainTask: MainTask? = null;
+    var currentMainTask: MainTask? = null
+
     for(i in 0 until strings.size) {
         val pattern = Pattern.compile("(?<name>[a-zA-Z])(?<order>\\d+) (?<periods>.*)")
         val matcher = pattern.matcher(strings[i])
@@ -29,19 +29,7 @@ fun toJson(input: String): List<MainTask> {
             val order = matcher.group("order").toInt()
             val periods = matcher.group("periods")
 
-            var ps : MutableList<Period>
-            if (name[0].isUpperCase()) {
-                currentMainTask = MainTask(order, name, mutableListOf(), mutableListOf())
-                ps = currentMainTask.periods
-                mainTasks.add(currentMainTask)
-            } else {
-                if (currentMainTask == null) {
-                    throw IllegalStateException();
-                }
-                val task = SubTask(mutableListOf(), order, name)
-                ps = task.periods
-                currentMainTask.subTasks.add(task)
-            }
+            var ps: MutableList<Period> = mutableListOf()
             var i = 0
             while (i < periods.length) {
                 while (i < periods.length && periods[i].equals(' ')) i++;
@@ -51,6 +39,17 @@ fun toJson(input: String): List<MainTask> {
                 while (i < periods.length && periods[i].equals(' ')) i++;
                 val period = Period(periodStart, periodEnd)
                 ps.add(period)
+            }
+
+            if (name[0].isUpperCase()) {
+                currentMainTask = MainTask(order, name, ps, mutableListOf())
+                mainTasks.add(currentMainTask)
+            } else {
+                if (currentMainTask == null) {
+                    throw IllegalStateException();
+                }
+                val task = SubTask(ps, order, name)
+                currentMainTask.subTasks.add(task)
             }
         }
     }

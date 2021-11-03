@@ -1,5 +1,3 @@
-import kotlin.random.Random
-
 fun main() {
     val arr = intArrayOf(11,9,4,7,3,4,5,9,1,12)
     val arr1 = intArrayOf(1,9,10,1,20)
