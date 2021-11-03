@@ -17,8 +17,8 @@ fun main() {
 }
 
 fun toJson(input: String): List<MainTask> {
-    var strings = input.split("\n");
-    var mainTasks = mutableListOf<MainTask>()
+    val strings = input.split("\n");
+    val mainTasks = mutableListOf<MainTask>()
     var currentMainTask: MainTask? = null
 
     for(i in 0 until strings.size) {
@@ -32,15 +32,19 @@ fun toJson(input: String): List<MainTask> {
             var ps: MutableList<Period> = mutableListOf()
             var i = 0
             while (i < periods.length) {
+                // Пропускаем пробелы(если есть)
                 while (i < periods.length && periods[i].equals(' ')) i++;
                 val periodStart = i;
+                // Считаем сам периоды процесса
                 while (i < periods.length && setOf('|', '{', '}', '-').contains(periods[i])) i++;
                 val periodEnd = i;
+                // Пропускаем пробелы(если есть)
                 while (i < periods.length && periods[i].equals(' ')) i++;
                 val period = Period(periodStart, periodEnd)
                 ps.add(period)
             }
 
+            // Главная задача
             if (name[0].isUpperCase()) {
                 currentMainTask = MainTask(order, name, ps, mutableListOf())
                 mainTasks.add(currentMainTask)
